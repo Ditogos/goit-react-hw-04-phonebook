@@ -3,7 +3,7 @@ import { nanoid } from 'nanoid';
 import css from './App.module.css';
 import { ContactForm } from './contactForm/contactForm';
 import { Filter } from './filterContactList/filterContactList';
-import ContactList from './contactList/contactList';
+import { ContactList } from './contactList/contactList';
 
 const contactsKey = 'contacts';
 
@@ -26,8 +26,8 @@ export const App = () => {
     setContacts(prevContacts => [contact, ...prevContacts]);
   };
 
-  const changeFilter = event => {
-    setFilter(event.currentTarget.value);
+  const changeFilter = value => {
+    setFilter(value);
   };
 
   const deleteContact = contactId => {
@@ -51,11 +51,15 @@ export const App = () => {
       <ContactForm onSubmit={addContact} />
       <h2>Contacts</h2>
       <Filter value={filter} onChange={changeFilter} />
-      <ContactList
-        filteredContacts={filteredContacts}
-        onDeleteContact={deleteContact}
-        filtredContacts={filteredContacts}
-      />
+      {contacts.length > 0 ? (
+        <ContactList
+          filteredContacts={filteredContacts}
+          onDeleteContact={deleteContact}
+          filtredContacts={filteredContacts}
+        />
+      ) : (
+        <p>No contacts found.</p>
+      )}
     </div>
   );
 };
